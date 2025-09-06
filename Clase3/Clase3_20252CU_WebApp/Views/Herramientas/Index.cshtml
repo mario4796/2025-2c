@@ -30,10 +30,26 @@
                 <td>@herramienta.CantidadEnStock</td>
                 <td><img src="@herramienta.Imagen" style="width:100px;height:100px:" /></td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@herramienta.Id" class="btn btn-primary btn-sm">Editar</a>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="openEditModal(@herramienta.Id)">Editar</button>
                     <a asp-action="Delete" asp-route-id="@herramienta.Id" class="btn btn-danger btn-sm">Eliminar</a>
                 </td>
             </tr>
+        }
+        <div id="editModalContainer"></div>
+
+        @section Scripts {
+            <script>
+                function openEditModal(id) {
+                    fetch('/Herramientas/Edit/' + id)
+                        .then(response => response.text())
+                        .then(html => {
+                            document.getElementById('editModalContainer').innerHTML = html;
+                            // Bootstrap 5 modal
+                            var modal = new bootstrap.Modal(document.getElementById('editHerramientaModal'));
+                            modal.show();
+                        });
+                }
+            </script>
         }
     </tbody>
 </table>

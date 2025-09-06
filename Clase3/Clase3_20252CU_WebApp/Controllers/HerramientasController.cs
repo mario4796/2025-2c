@@ -29,5 +29,29 @@ namespace Clase3_20252CU_WebApp.Controllers
             _herramientaServicio.AgregarHerramienta(herramienta);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            _herramientaServicio.EliminarHerramienta(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var herramienta = _herramientaServicio.ObtenerHerramientaPorId(id);
+            if (herramienta == null)
+                return NotFound();
+            return PartialView("EditModal", herramienta); // Partial view for modal
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Herramienta herramienta)
+        {
+            // You need to implement update logic in your service
+            _herramientaServicio.ActualizarHerramienta(herramienta);
+            return RedirectToAction("Index");
+        }
     }
 }

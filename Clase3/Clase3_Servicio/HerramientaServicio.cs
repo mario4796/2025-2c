@@ -1,4 +1,5 @@
 ﻿using Clase3_Entidades;
+using System.Xml.Serialization;
 
 namespace Clase3_Servicio
 {
@@ -8,6 +9,8 @@ namespace Clase3_Servicio
         List<Herramienta> ObtenerHerramientas();
         Herramienta ObtenerHerramientaPorId(int id);
         void AgregarHerramienta(Herramienta herramienta);
+        void EliminarHerramienta(int id);
+        void ActualizarHerramienta(Herramienta herramienta);
     }
 
     public class HerramientaServicio : IHerramientaServicio
@@ -55,6 +58,17 @@ namespace Clase3_Servicio
             if (herramienta != null)
             {
                 _herramientas.Remove(herramienta);
+            }
+        }
+        public void ActualizarHerramienta(Herramienta herramienta)
+        {
+            var existente = _herramientas.FirstOrDefault(h => h.Id == herramienta.Id);
+            if (existente != null)
+            {
+                existente.Nombre = herramienta.Nombre;
+                existente.Precio = herramienta.Precio;
+                existente.CantidadEnStock = herramienta.CantidadEnStock;
+                existente.Imagen = herramienta.Imagen;
             }
         }
 
