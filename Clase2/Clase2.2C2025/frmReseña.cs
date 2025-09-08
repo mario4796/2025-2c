@@ -8,6 +8,7 @@ namespace Clase2._2C2025
         {
             InitializeComponent();
             cargarPuntuacion();
+            _ = CargarTiposLocalEnCombo();
         }
 
         private void cargarPuntuacion()
@@ -46,6 +47,7 @@ namespace Clase2._2C2025
         {
             //mostrar un formulario de alta
             frmAlta frmAlta = new frmAlta();
+            frmAlta.FormClosed += async (s, args) => await CargarTiposLocalEnCombo();
             frmAlta.Show();
         }
         private void btnRefrescar_Click(object sender, EventArgs e)
@@ -95,6 +97,31 @@ namespace Clase2._2C2025
             }
         }
 
-        
+        private async Task CargarTiposLocalEnCombo()
+        {
+            cboTipoLocal.Items.Clear();
+
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetAsync("https://localhost:7211/api/TipoLocal");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    var tiposLocal = System.Text.Json.JsonSerializer.Deserialize<List<TipoLocal>>(jsonResponse,
+                        new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                    foreach (var tipo in tiposLocal)
+                    {
+                        cboTipoLocal.Items.Add(tipo.Nombre);
+                    }
+                }
+            }
+
+            // Agrega valores fijos si lo deseas
+            cboTipoLocal.Items.Add("Otro");
+
+            if (cboTipoLocal.Items.Count > 0)
+                cboTipoLocal.SelectedIndex = 0;
+        }
     }
 }

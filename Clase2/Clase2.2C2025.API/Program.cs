@@ -8,6 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<Clase2._2C2025.Logica.IReseñaServicio, Clase2._2C2025.Logica.ReseñaServicio>();
+builder.Services.AddSingleton<Clase2._2C2025.Logica.ITipoLocalServicio, Clase2._2C2025.Logica.TipoLocalServicio>();
 
 var app = builder.Build();
 
