@@ -5,6 +5,7 @@ namespace CLASE4_POO_Servicio
     {
         List<Animal> ObtenerAnimales();
         void AgregarAnimal(Animal animal);
+        void EliminarAnimalPorIndice(int indice);
     }
 
     public class AnimalesServicio : IAnimalesServicio
@@ -27,6 +28,11 @@ namespace CLASE4_POO_Servicio
         public void AgregarAnimal(Animal animal)
         {
             _animales.Add(animal);
+        }
+        public void EliminarAnimalPorIndice(int indice)
+        {
+            if (indice >= 0 && indice < _animales.Count)
+                _animales.RemoveAt(indice);
         }
 
     }
